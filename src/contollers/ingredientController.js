@@ -1,12 +1,11 @@
 const IngredientService = require('../services/ingredientService');
 
 
-// Create Ingredient and others should be redesign
 class IngredientController {
   static async createIngredientType(req, res) {
-    const { ingTypeId,pizzaId,totalPrice,totalAmount } = req.body;
+    // const { ingTypeId,pizzaId,totalPrice,totalAmount } = req.body;
     try {
-      const ingredient = await IngredientService.createIngredient(ingTypeId,pizzaId,totalPrice,totalAmount);
+      const ingredient = await IngredientService.createIngredient(req.body); // it doesnt matter req.body or { ingTypeId,pizzaId,totalPrice,totalAmount }
       res.status(201).json(ingredient);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -50,10 +49,33 @@ class IngredientController {
     const { id } = req.params;
     const { ingTypeId,pizzaId,totalPrice,totalAmount } = req.body;
     try {
-      const ingredient = await IngredientService.updateIngredientById(id,ingTypeId,pizzaId,totalPrice,totalAmount);
+      const ingredient = await IngredientService.updateIngredientById({id,ingTypeId,pizzaId,totalPrice,totalAmount});
       res.status(200).json(ingredient);
     } catch (error) {
       res.status(500).json({ error: error.message });
+    }
+  }
+
+  /**
+   *  The entity should be at that format for all db types for function getIngredientsByPizzaId(). 
+   * {
+        "ingredientName": "Sausage",
+        "ingredientImg": "image_url_4",
+        "ingredientTotalAmount": 50,
+        "ingredientTotalPrice": 5
+    }
+   */
+
+  static async getIngredientsByPizzaId(req,res){
+    const {pizzaId} = req.params;
+    try {
+      const ingredients = await IngredientService.getIngredientsByPizzaId(pizzaId);
+      if (ingredients) {
+        // console.log(ingredients);
+        res.status(200).json(ingredients);
+      } 
+    } catch (error) {
+      res.status(500).json({error:error.message});
     }
   }
 }

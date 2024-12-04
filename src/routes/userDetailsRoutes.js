@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.post('/userDetails', UserDetailsController.createUserDetails);
 router.get('/userDetails', UserDetailsController.getAllUserDetails);
-router.get('/userDetails/:id', UserDetailsController.getUserDetailsById);
-router.delete('/userDetails/:id', UserDetailsController.deleteUserDetailsById);
-router.put('/userDetails/:id', UserDetailsController.updateUserDetailsById);
+router.get('/userDetails/:userId', UserDetailsController.getUserDetailsByUserId);
+router.delete('/userDetails/:userId', UserDetailsController.deleteUserDetailsByUserId);
+router.put('/userDetails', UserDetailsController.updateUserDetailsByUserId);
 
 module.exports = router;

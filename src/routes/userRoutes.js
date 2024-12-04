@@ -3,9 +3,9 @@ const UserController = require('../contollers/userController'); // Adjust the pa
 
 const router = express.Router();
 
-router.post('/user', UserController.createUser);
 router.get('/users', UserController.getAllUsers);
 router.get('/user/:id', UserController.getUserById);
+router.post('/user', UserController.createUser);
 router.delete('/user/:id', UserController.deleteUserById);
 router.put('/user/:id', UserController.updateUserById);
 

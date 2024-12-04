@@ -5,14 +5,14 @@ class OrderController {
   static async createOrder(req, res) {
     const { pizzaId, userId, amount, date, status, paymentMethod } = req.body;
     try {
-      const order = await OrderService.createOrder(pizzaId, userId, amount, date,status,paymentMethod);
+      const order = await OrderService.createOrder(req.body);
       res.status(201).json(order);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   }
 
-  static async getAllOrder(req, res) {
+  static async getAllOrders(req, res) {
     try {
       const orders = await OrderService.getAllOrders();
       res.status(200).json(orders);
@@ -49,7 +49,7 @@ class OrderController {
     const { id } = req.params;
     const { pizzaId,userId, amount, date, status, paymentMethod } = req.body;
     try {
-      const user = await OrderService.updateOrderById(id,pizzaId,userId,amount,date,status,paymentMethod)
+      const user = await OrderService.updateOrderById({id,pizzaId,userId,amount,date,status,paymentMethod})
       res.status(200).json(user);
     } catch (error) {
       res.status(500).json({ error: error.message });

@@ -8,5 +8,6 @@ router.get('/ingredients', IngredientController.getAllIngredientTypes);
 router.get('/ingredient/:id', IngredientController.getIngredientTypeById);
 router.delete('/ingredient/:id', IngredientController.deleteIngredientById);
 router.put('/ingredient/:id', IngredientController.updateIngredientTypeById);
+router.get('/ingredientByPizzaId/:pizzaId',IngredientController.getIngredientsByPizzaId)
 
 module.exports = router;

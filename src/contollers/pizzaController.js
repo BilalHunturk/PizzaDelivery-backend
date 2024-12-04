@@ -1,11 +1,11 @@
-// src/controllers/pizzaController.js
-const PizzaService = require('../services/pizzaservice')
+const PizzaService = require('../services/pizzaService') 
 
 class PizzaController {
+
+  // {name, size, dough_size, pizzaImg, price}
   static async createPizza(req, res) {
-    const { name, size, dough_size } = req.body;
     try {
-      const pizza = await PizzaService.createPizza(name, size, dough_size);
+      const pizza = await PizzaService.createPizza(req.body);
       res.status(201).json(pizza);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -32,7 +32,7 @@ class PizzaController {
       const pizzas = await PizzaService.getAllPizzas();
       res.json(pizzas);
     } catch (error) {
-      next(error);
+      throw Error(error)
     }
   }
 
@@ -48,9 +48,10 @@ class PizzaController {
 
   static async updatePizza(req, res) {
     const { id } = req.params;
-    const { name, size, dough_size } = req.body;
+    const { name, size, dough_size, price, pizzaImg } = req.body;
+    const params = { id, name, size, dough_size, price, pizzaImg }
     try {
-      const updatedPizza = await PizzaService.updatePizzaById(id, name, size, dough_size);
+      const updatedPizza = await PizzaService.updatePizzaById(params);
       res.status(200).json(updatedPizza);
     } catch (error) {
       res.status(500).json({ error: error.message });

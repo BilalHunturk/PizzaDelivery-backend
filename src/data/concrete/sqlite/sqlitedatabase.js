@@ -1,23 +1,29 @@
-
+require('dotenv').config();
 const sqlite3 = require('sqlite3').verbose();
-const IDatabase = require('../../abstract/interface/IDatabase');
+const dbPath = process.env.SQLITEPATH;
 
-class SQLiteDatabase extends IDatabase {
-  constructor(dbPath) {
-    super();
-    this.dbPath = dbPath;
-    this.db = null;
-  }
+class SQLiteDatabase {
 
-  connect() {
-    this.db = new sqlite3.Database(this.dbPath, (err) => {
+  async connect() {
+    const connectedDb = new sqlite3.Database(dbPath, (err) => {
       if (err) {
         console.error('Error opening database:', err.message);
       } else {
         console.log('Connected to the SQLite database.');
       }
-      console.log(this.dbPath)
     });
+    console.log(connectedDb)
+    const rows = await this.query(connectedDb,'SELECT * FROM pizza')
+    // const rows = await new Promise((resolve, reject) => {
+    //   connectedDb.all('SELECT * FROM pizza',[], (err, rows) => {
+    //     if (err) {
+    //       return reject(err);
+    //     }
+    //     resolve(rows);
+    //   });
+    // });
+    // connectedDb.all('SELECT * FROM pizza',[])
+    console.log('rows are : ',rows)
   }
 
   disconnect() {
@@ -30,9 +36,9 @@ class SQLiteDatabase extends IDatabase {
     });
   }
 
-  query(sql, params = []) {
+  query(db,sql, params = []) {
     return new Promise((resolve, reject) => {
-      this.db.all(sql, params, (err, rows) => {
+      db.all(sql, params, (err, rows) => {
         if (err) {
           return reject(err);
         }
@@ -41,9 +47,9 @@ class SQLiteDatabase extends IDatabase {
     });
   }
 
-  run(sql, params = []) {
+  run(db, sql, params = []) {
     return new Promise((resolve, reject) => {
-      this.db.run(sql, params, function (err) {
+      db.run(sql, params, function (err) {
         if (err) {
           return reject(err);
         }

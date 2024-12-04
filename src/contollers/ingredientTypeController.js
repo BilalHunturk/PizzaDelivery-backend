@@ -4,7 +4,7 @@ class IngredientTypeController {
   static async createIngredientType(req, res) {
     const { name, imageUrl, pricePerMinAmount, minAmount } = req.body;
     try {
-      const ingredientType = await IngredientTypeService.createIngredientType(name, imageUrl, pricePerMinAmount, minAmount);
+      const ingredientType = await IngredientTypeService.createIngredientType({name, imageUrl, pricePerMinAmount, minAmount});
       res.status(201).json(ingredientType);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -48,7 +48,7 @@ class IngredientTypeController {
     const { id } = req.params;
     const { name, imageUrl, pricePerMinAmount, minAmount } = req.body;
     try {
-      const ingredientType = await IngredientTypeService.updateIngredientTypeById(id, name, imageUrl, pricePerMinAmount, minAmount);
+      const ingredientType = await IngredientTypeService.updateIngredientTypeById({id, name, imageUrl, pricePerMinAmount, minAmount});
       res.status(200).json(ingredientType);
     } catch (error) {
       res.status(500).json({ error: error.message });

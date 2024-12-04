@@ -4,7 +4,7 @@ class UserDetailsController {
   static async createUserDetails(req, res) {
     const { userId, name, surname, email, phone } = req.body;
     try {
-      const userDetails = await UserDetailsService.createUserDetails(userId, name, surname, email, phone);
+      const userDetails = await UserDetailsService.createUserDetails(req.body);
       res.status(201).json(userDetails);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -20,10 +20,10 @@ class UserDetailsController {
     }
   }
 
-  static async getUserDetailsById(req, res) {
+  static async getUserDetailsByUserId(req, res) {
     const { userId } = req.params;
     try {
-      const userDetails = await UserDetailsService.getUserDetailsById(userId);
+      const userDetails = await UserDetailsService.getUserDetailsByUserId(userId);
       if (!userDetails) {
         res.status(404).json({ message: 'User details not found' });
       } else {
@@ -34,7 +34,7 @@ class UserDetailsController {
     }
   }
 
-  static async deleteUserDetailsById(req, res) {
+  static async deleteUserDetailsByUserId(req, res) {
     const { userId } = req.params;
     try {
       await UserDetailsService.deleteUserDetailsById(userId);
@@ -44,11 +44,10 @@ class UserDetailsController {
     }
   }
 
-  static async updateUserDetailsById(req, res) {
-    const { userId } = req.params;
-    const { name, surname, email, phone } = req.body;
+  static async updateUserDetailsByUserId(req, res) {
+    const { userId, name, surname, email, phone } = req.body;
     try {
-      const userDetails = await UserDetailsService.updateUserDetailsById(userId, name, surname, email, phone);
+      const userDetails = await UserDetailsService.updateUserDetailsById({userId, name, surname, email, phone});
       res.status(200).json(userDetails);
     } catch (error) {
       res.status(500).json({ error: error.message });
