@@ -58,13 +58,9 @@ Ensure you have the following installed:
 - `bcryptjs`: Password hashing.
 - `jsonwebtoken`: Secure token-based authentication.
 
-## 📜 License
+##  A
 
-This project is licensed under the ISC License. See the [LICENSE](LICENSE) file for details.
-
-## 🤝 Contributions
-
-Contributions are welcome! Feel free to fork this repository, make your changes, and submit a pull request.
+This project is created for educational purposes. Feel free to use it.
 
 ---
 
